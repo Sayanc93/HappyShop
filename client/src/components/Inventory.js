@@ -17,7 +17,7 @@ class Inventory extends Component {
                 productsCount: 0,
                 categoryFilter: "all",
                 minimumPrice: 0,
-                maximumPrice: 100000,
+                maximumPrice: 10000,
                 isLoading: true,
                 pageNumber: 0,
                 sortingOrder: "ascending"
