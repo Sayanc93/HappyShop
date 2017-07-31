@@ -1,15 +1,8 @@
 class SeedData
   class << self
     def generate
-      # create_admin_user
       create_categories
       create_products
-    end
-
-    def create_admin_user
-      AdminUser.create!(email: 'admin@example.com',
-                        password: 'password',
-                        password_confirmation: 'password')
     end
 
     def create_categories
