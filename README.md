@@ -1,17 +1,21 @@
 # Introduction
 
-Welcome to API!
+Welcome to HappyShop repository!
 
 HappyShop API expects params to be sent as JSON.
 All requests should have the 'Content-Type' header set to 'application/json'.
 The API repsonds with JSON data.
+
+Note: The front-end React code resides in client folder. 
+
+Run `rake start` to spin the entire project. Frontend runs on port 3000, while backend runs on port 3001.
 
 # Fetch (Products)
 
 This API end point can be used to fetch all products, default parameters of page, filter and sorting order is needed.
 
 ```shell
-curl -X POST -H "Content-Type: application/json"
+curl -X GET -H "Content-Type: application/json"
 -d '
 {"page": {"size": "6", 
           "number": "0"}, 
@@ -55,12 +59,39 @@ curl -X POST -H "Content-Type: application/json"
 * **filter** : Filtering parameters
 * **sorting** : Sorting parameters
 
+# Fetch Product
+
+This API end point can be used to fetch a single product details, ID must be passed in the request.
+
+```shell
+curl -X GET -H "Content-Type: application/json"
+ "http://stark-island-44012.herokuapp.com/api/v1/products/1"
+```
+
+> The above command returns following JSON data:
+
+```json
+{"product":[{"id":"4", 
+             "name":"KAT VON D", 
+             "sold_out": false, 
+             "under_sale":false, 
+             "price_in_cents":1367, 
+             "sale_price_in_cents": 0, 
+             "sale_text": "", 
+             "category": {"id": 1, "name": "makeup"}}]
+  }
+```
+
+### HTTP Request
+
+`GET http://stark-island-44012.herokuapp.com/api/v1/products/:id`
+
 # Filter Products (By Category)
 
 This API end point can be used to filter products by category name. Replacing category name from "all" triggers filter for products according to categories.
 
 ```shell
-curl -X POST -H "Content-Type: application/json"
+curl -X GET -H "Content-Type: application/json"
 -d '
 {"page": {"size": "6", 
           "number": "0"}, 
@@ -105,7 +136,7 @@ curl -X POST -H "Content-Type: application/json"
 This API end point can be used to filter products by price range. Replacing default price range with any minimum and maximum price creates a filtering range on the basis of those price values.
 
 ```shell
-curl -X POST -H "Content-Type: application/json"
+curl -X GET -H "Content-Type: application/json"
 -d '
 {"page": {"size": "6", 
           "number": "0"}, 
@@ -147,7 +178,7 @@ curl -X POST -H "Content-Type: application/json"
 This API end point can be used to sort products by price range. Replacing default sorting order value with either "ascending" or "descending" value, triggers reordering of products according to the requirement.
 
 ```shell
-curl -X POST -H "Content-Type: application/json"
+curl -X GET -H "Content-Type: application/json"
 -d '
 {"page": {"size": "6", 
           "number": "0"}, 
@@ -197,7 +228,7 @@ curl -X POST -H "Content-Type: application/json"
 This API end point can be used to get paginated list of products. Page size and number are mandatory fields alongwith the default parameters of other filtering options.
 
 ```shell
-curl -X POST -H "Content-Type: application/json"
+curl -X GET -H "Content-Type: application/json"
 -d '
 {"page": {"size": "3", 
           "number": "2"}, 
@@ -247,7 +278,7 @@ curl -X POST -H "Content-Type: application/json"
 This API end point can be used to get all the categories of products.
 
 ```shell
-curl -X POST -H "Content-Type: application/json"
+curl -X GET -H "Content-Type: application/json"
 -d  "http://stark-island-44012.herokuapp.com/api/v1/categories"
 ```
 
