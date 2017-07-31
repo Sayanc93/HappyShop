@@ -27,6 +27,9 @@ class ProductCard extends Component {
                         <div className="title">{this.props.name}</div>
                         <div className="price">$ {this.props.price / 100}</div>
                         <div>
+                            <small><span>Category</span>: <span>{this.props.category.name}</span></small>
+                        </div>
+                        <div>
                             <span className="glyphicon glyphicon-star-empty"></span>
                             <span className="glyphicon glyphicon-star-empty"></span>
                             <span className="glyphicon glyphicon-star-empty"></span>

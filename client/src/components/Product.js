@@ -8,8 +8,8 @@ class Product extends Component {
         super();
         this.state = {
             name: undefined,
-            description: undefined,
-            priceInCents: 0
+            priceInCents: 0,
+            category: undefined
         }
     }
 
@@ -25,10 +25,9 @@ class Product extends Component {
                             };
         axios.get(`/api/v1/products/${this.props.params.productId}`, requestOptions).then(function(response) {
             if (response.data.success) {
-                console.log(response.data.product);
                 this.setState({ name: response.data.product.name,
-                                description: response.data.product.description,
-                                priceInCents: response.data.product.price_in_cents });
+                                priceInCents: response.data.product.price_in_cents,
+                                category: response.data.product.category.name });
             } else {
                 console.log("Couldn't load product");
             }
@@ -36,7 +35,6 @@ class Product extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="jumbotron container align-lower">
                 <div className="row">
@@ -56,6 +54,9 @@ class Product extends Component {
                             <small><span>NEW</span> | <span>LIMITED EDITION</span></small>
                         </div>   
                         <h3>$ {this.state.priceInCents / 100}</h3>  
+                        <div>
+                            <small><span>Category</span>: <span>{this.state.category}</span></small>
+                        </div>
                         <p>"Voluptatem nihil sint placeat ratione modi maxime. Tenetur enim et ipsam sed dolor. Necessitatibus omnis voluptate delectus voluptas a itaque illo. Voluptas aut inventore et velit eius.", "Et illum cum ipsum culpa. Esse aut voluptates delectus occaecati tempore saepe. Quis qui tempora sint soluta cumque. Odit voluptatem aperiam qui libero molestias quibusdam. Dolorem ut voluptas molestiae odio.", "Et dolor et molestiae beatae iusto maxime. Deleniti quas consequuntur facere dicta. Facilis dolor voluptatem vitae placeat sit nostrum velit."</p>                                              
                     </div> 
                 </div>  

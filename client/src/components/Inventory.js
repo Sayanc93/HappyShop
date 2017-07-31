@@ -121,7 +121,8 @@ class Inventory extends Component {
                                                      salePrice={product.sale_price_in_cents}
                                                      saleText={product.sale_text}
                                                      soldOut={product.sold_out}
-                                                     underSale={product.under_sale} />
+                                                     underSale={product.under_sale}
+                                                     category={product.category} />
                                     )
                                 })
                             }
