@@ -1,50 +1,18 @@
 class Api::V1::ProductsController < Api::V1::BaseController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show]
 
   # GET /products
   def index
-    @products = Product.includes(:category).all
-    render json: @products
+    fetch_and_organize_products
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(@products, 
+                                                                             adapter: :json).as_json
+    render json: serializable_resource.merge(success: true, count: @all_products.count)
   end
 
-  # GET /products/1
   def show
-    render json: @product.includes({ ingredients: { only: [:id, :description] }})
-  end
-
-  # GET /products/new
-  def new
-    @product = Product.new
-  end
-
-  # GET /products/1/edit
-  def edit
-  end
-
-  # POST /products
-  def create
-    @product = Product.new(product_params)
-
-    if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
-    else
-      render :new
-    end
-  end
-
-  # PATCH/PUT /products/1
-  def update
-    if @product.update(product_params)
-      redirect_to @product, notice: 'Product was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  # DELETE /products/1
-  def destroy
-    @product.destroy
-    redirect_to products_url, notice: 'Product was successfully destroyed.'
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(@product, 
+                                                                             adapter: :json).as_json
+    render json: serializable_resource.merge(success: true)
   end
 
   private
@@ -61,6 +29,30 @@ class Api::V1::ProductsController < Api::V1::BaseController
                                       :under_sale,
                                       :price_in_cents,
                                       :sale_price_in_cents,
-                                      :sale_text)
+                                      :sale_text,
+                                      :limit,
+                                      :offset)
+    end
+
+    def pagination_params
+      params.require(:page).permit(:size, :number)
+    end
+
+    def filtering_params
+      params.require(:filter).permit(:category, :minimum_price, :maximum_price)
+    end
+
+    def sorting_params
+      params.require(:sorting).permit(:order)
+    end
+
+    def fetch_and_organize_products
+      @all_products = helpers.filter(category: filtering_params[:category],
+                                price_range: {maximum: filtering_params[:maximum_price], 
+                                              minimum: filtering_params[:minimum_price]})
+      products_on_page = helpers.paginate(resource: @all_products, 
+                                          limit: pagination_params[:size],
+                                          current_page: pagination_params[:number])
+      @products = helpers.sort_by_price(products_on_page, sorting_params[:order])
     end
 end

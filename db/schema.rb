@@ -54,7 +54,8 @@ ActiveRecord::Schema.define(version: 20170728042218) do
 
   create_table "products", force: :cascade do |t|
     t.bigint "category_id"
-    t.string "name"
+    t.string "name", default: ""
+    t.text "description", default: ""
     t.boolean "sold_out", default: false
     t.boolean "under_sale", default: false
     t.integer "price_in_cents", default: 0, null: false

@@ -12,23 +12,27 @@ gem 'uglifier', '>= 1.3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'pg'
 gem 'rack-cors'
-gem 'active_model_serializers', '~> 0.10.2'
+gem 'active_model_serializers'
 
 gem 'devise', '> 4.x'
 
 gem 'money-rails', '~>1'
 
+gem 'foreman'
+
+gem 'activeadmin', github: 'activeadmin'
+
 group :development, :test do
+  gem 'faker'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'database_cleaner'
 end
 
 group :development do
-  gem 'faker'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-gem 'foreman'
-
-gem 'activeadmin', github: 'activeadmin'

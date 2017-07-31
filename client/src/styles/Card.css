@@ -1,0 +1,7 @@
+div.thumbnail {
+    border: none;
+}
+
+.thumbnail:hover {
+    cursor: pointer;
+}

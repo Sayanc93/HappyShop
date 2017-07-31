@@ -1,5 +1,12 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  
+  def index
+    all_categories = Category.all
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(all_categories, 
+                                                                             root: 'categories', 
+                                                                             adapter: :json).as_json 
+    render json: serializable_resource.merge(success: true)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
