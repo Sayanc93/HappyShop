@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Match, Miss } from 'react-router';
+import { BrowserRouter, browserHistory, Match, Miss } from 'react-router';
 
 import Store from  './components/Store';
 import Inventory from  './components/Inventory';
@@ -11,11 +11,11 @@ import './styles/Index.css';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <div>
         <Match exactly pattern="/" component={Store} />
-        <Match exactly pattern="/inventory" component={Inventory} />
-        <Match exactly pattern="/product/:productId" component={Product} />
+        <Match pattern="/inventory" component={Inventory} />
+        <Match pattern="/product/:productId" component={Product} />
         <Miss component={NotFound} />
       </div>
     </BrowserRouter>

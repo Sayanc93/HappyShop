@@ -39,7 +39,7 @@ class Product extends Component {
             <div className="jumbotron container align-lower">
                 <div className="row">
                     <div className="col-xs-4">
-                        <img src="http://www.sephora.com/productimages/sku/s1398858-main-hero.jpg" alt="product photo" />
+                        <img src="http://www.sephora.com/productimages/sku/s1398858-main-hero.jpg" alt="product" />
                         <div className="col-xs-6 col-md-offset-3">
                             <span className="glyphicon glyphicon-star-empty"></span>
                             <span className="glyphicon glyphicon-star-empty"></span>
