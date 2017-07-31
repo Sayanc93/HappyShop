@@ -15,6 +15,7 @@ gem 'active_model_serializers'
 
 gem 'foreman'
 gem 'faker'
+gem 'rack-cors'
 gem 'responders'
 
 group :development, :test do

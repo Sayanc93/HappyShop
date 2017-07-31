@@ -1,4 +1,4 @@
-module PaginationHelper
+module PaginationService
     def paginate options={}
         expected_keys = [:resource, :limit, :current_page]
         fail unless expected_keys & options.keys == expected_keys

@@ -1,4 +1,4 @@
-module ProductsHelper
+module ProductsFilteringService
     def filter options={}
         category = options[:category]
         products = get_products_by_category category

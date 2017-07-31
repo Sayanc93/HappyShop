@@ -1,4 +1,7 @@
 class Api::V1::ProductsController < Api::V1::BaseController
+  include PaginationService
+  include ProductsFilteringService
+
   before_action :set_product, only: [:show]
 
   # GET /products
@@ -47,12 +50,12 @@ class Api::V1::ProductsController < Api::V1::BaseController
     end
 
     def fetch_and_organize_products
-      @all_products = helpers.filter(category: filtering_params[:category],
-                                price_range: {maximum: filtering_params[:maximum_price], 
-                                              minimum: filtering_params[:minimum_price]})
-      products_on_page = helpers.paginate(resource: @all_products, 
-                                          limit: pagination_params[:size],
-                                          current_page: pagination_params[:number])
-      @products = helpers.sort_by_price(products_on_page, sorting_params[:order])
+      @all_products = filter(category: filtering_params[:category],
+                             price_range: {maximum: filtering_params[:maximum_price], 
+                                           minimum: filtering_params[:minimum_price]})
+      products_on_page = paginate(resource: @all_products, 
+                                  limit: pagination_params[:size],
+                                  current_page: pagination_params[:number])
+      @products = sort_by_price(products_on_page, sorting_params[:order])
     end
 end
