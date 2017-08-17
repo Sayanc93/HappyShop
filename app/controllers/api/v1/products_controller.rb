@@ -7,13 +7,13 @@ class Api::V1::ProductsController < Api::V1::BaseController
   # GET /products
   def index
     fetch_and_organize_products
-    serializable_resource = ActiveModelSerializers::SerializableResource.new(@products, 
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(@products,
                                                                              adapter: :json).as_json
     render json: serializable_resource.merge(success: true, count: @all_products.count)
   end
 
   def show
-    serializable_resource = ActiveModelSerializers::SerializableResource.new(@product, 
+    serializable_resource = ActiveModelSerializers::SerializableResource.new(@product,
                                                                              adapter: :json).as_json
     render json: serializable_resource.merge(success: true)
   end
@@ -38,7 +38,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
     end
 
     def pagination_params
-      params.require(:page).permit(:size, :number)
+      params.require(:page).permit(:limit, :current_page)
     end
 
     def filtering_params
@@ -51,11 +51,11 @@ class Api::V1::ProductsController < Api::V1::BaseController
 
     def fetch_and_organize_products
       @all_products = filter(category: filtering_params[:category],
-                             price_range: {maximum: filtering_params[:maximum_price], 
+                             price_range: {maximum: filtering_params[:maximum_price],
                                            minimum: filtering_params[:minimum_price]})
-      products_on_page = paginate(resource: @all_products, 
-                                  limit: pagination_params[:size],
-                                  current_page: pagination_params[:number])
+      products_on_page = paginate(@all_products,
+                                  limit: pagination_params[:limit],
+                                  current_page: pagination_params[:current_page])
       @products = sort_by_price(products_on_page, sorting_params[:order])
     end
 end

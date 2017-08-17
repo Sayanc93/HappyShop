@@ -38,8 +38,8 @@ class Inventory extends Component {
                                     'Content-Type': 'application/json',
                                 },
                                 params: {
-                                    'page[size]': this.perPage,
-                                    'page[number]': this.state.pageNumber,
+                                    'page[limit]': this.perPage,
+                                    'page[current_page]': this.state.pageNumber,
                                     'filter[category]': this.state.categoryFilter,
                                     'filter[minimum_price]': this.state.minimumPrice,
                                     'filter[maximum_price]': this.state.maximumPrice,

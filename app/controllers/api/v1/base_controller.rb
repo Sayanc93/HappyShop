@@ -5,6 +5,7 @@ class Api::V1::BaseController < ApplicationController
   respond_to :json
 
   rescue_from Exception, with: :handle_api_exceptions
+  rescue_from ArgumentError, with: :handle_argument_exceptions
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
@@ -23,6 +24,12 @@ class Api::V1::BaseController < ApplicationController
     error_message = 'Record not found.'
 
     render_errors(error_message, 404)
+  end
+
+  def handle_argument_exceptions exception
+    log_exception exception
+
+    render_errors(exception.message, 422)
   end
 
   def handle_api_exceptions exception
